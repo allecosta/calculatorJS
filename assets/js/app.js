@@ -1,4 +1,4 @@
-class calculator {
+class Calculator {
     constructor(previousOperandTextElement, currentOperandTextElement) {
         this.previousOperandTextElement = previousOperandTextElement
         this.currentOperandTextElement = currentOperandTextElement
@@ -50,7 +50,7 @@ class calculator {
             case '*':
                 computation = prev * current
                 break
-            case '÷':
+            case '/':
                 computation = prev / current
                 break
             default:
@@ -72,11 +72,11 @@ class calculator {
         if (isNaN(integerDigits)) {
             integerDisplay = ''
         } else {
-            integerDisplay = integerDigits.toLocaleString('pt-br', { maximumFractionDigits: 0 })
+            integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
         }
 
         if (decimalDigits != null) {
-            return '${integerDisplay}.${decimalDigits}'
+            return `${integerDisplay}.${decimalDigits}`
         } else {
             return integerDisplay
         }
@@ -88,7 +88,7 @@ class calculator {
 
         if (this.operation != null) {
             this.previousOperandTextElement.innerText =
-                '${this.getDisplayNumber(this.previousOperand)} ${this.operation}'
+                `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
         } else {
             this.previousOperandTextElement.innerText = ''
         }
@@ -97,14 +97,14 @@ class calculator {
 }
 
 const numberButton = document.querySelectorAll('[data-number]')
-const operationButton = document.querySelectorAll('data-operation')
+const operationButton = document.querySelectorAll('[data-operation]')
 const equalsButton = document.querySelector('[data-equals]')
 const deleteButton = document.querySelector('[data-delete]')
 const allClearButton = document.querySelector('[data-all-clear]')
 const previousOperandTextElement = document.querySelector('[data-previous-operand]')
 const currentOperandTextElement = document.querySelector('[data-current-operand]')
 
-const calculator = new calculator(previousOperandTextElement, currentOperandTextElement)
+const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
 
 numberButton.forEach(button => {
     button.addEventListener('click', () => {
@@ -136,29 +136,29 @@ deleteButton.addEventListener('click', button => {
 })
 
 document.addEventListener('keydown', function (event) {
-    let patternForNumbers = /[0-9]/g
+    let patternForNumbers = /[0-9]/g;
     let patternForOperators = /[+\-*\/]/g
 
     if (event.key.match(patternForNumbers)) {
-        event.preventDefault()
+        event.preventDefault();
         calculator.appendNumber(event.key)
         calculator.updateDisplay()
     }
 
     if (event.key === '.') {
-        event.preventDefault()
-        calculator.appendNumber(event.key);
-        calculator.updateDisplay();
+        event.preventDefault();
+        calculator.appendNumber(event.key)
+        calculator.updateDisplay()
     }
 
     if (event.key.match(patternForOperators)) {
-        event.preventDefault()
+        event.preventDefault();
         calculator.chooseOperation(event.key)
         calculator.updateDisplay()
     }
 
     if (event.key === 'Enter' || event.key === '=') {
-        event.preventDefault()
+        event.preventDefault();
         calculator.computer()
         calculator.updateDisplay()
     }
@@ -170,7 +170,7 @@ document.addEventListener('keydown', function (event) {
     }
 
     if (event.key == 'Delete') {
-        event.preventDefault()
+        event.preventDefault();
         calculator.clear()
         calculator.updateDisplay()
     }
